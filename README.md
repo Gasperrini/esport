@@ -1,8 +1,15 @@
 # e-sport-ktu
 
+
+## Working with Github
+Download git https://git-scm.com/download/win
+```
+git remote add origin https://github.com/MomoChimes/esport.git
+```
+
 ## Project setup
 ```
-npm install
+npm i
 ```
 
 ### Compiles and hot-reloads for development
