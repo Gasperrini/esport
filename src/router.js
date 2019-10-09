@@ -17,8 +17,31 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/Player.vue")
+      component: () => import("./views/Player.vue")
+    },
+    {
+      path: "/team",
+      name: "team",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import("./views/Team.vue")
+    },
+    {
+      path: "/tournament",
+      name: "tournament",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import("./views/Tournament.vue")
+    },
+    {
+      path: "/game",
+      name: "game",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import("./views/Game.vue")
     }
   ]
 });
