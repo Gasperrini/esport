@@ -26,9 +26,6 @@ export default {
         this.message = response;
         console.log(this.message);
       });
-    /*axios
-      .get("https://api.pandascore.co/players?&token=" + APIKEY)
-      .then(response => console.log(response));*/
   },
   components: {
     ListTest

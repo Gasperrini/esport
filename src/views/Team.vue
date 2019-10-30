@@ -6,7 +6,6 @@
 
 <script>
 // @ is an alias to /src
-import ListTest from "@/components/listTest.vue";
 import axios from "../../node_modules/axios";
 import APIKEY from "!raw-loader!@/assets/apikey.txt";
 
@@ -24,6 +23,6 @@ export default {
         this.message = response;
         console.log(this.message);
       });
-  },
+  }
 };
 </script>

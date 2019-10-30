@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="Test2">
     <div class="Test">
-      <img v-show="message.image_url"
+      <img
+        v-show="message.image_url"
         :src="
           message.image_url ||
             'http://www.thesportsfannetwork.com/siteresources/images/defaultavatar.jpg'
@@ -15,7 +16,7 @@
           message.current_team.image_url ||
             'https://a.espncdn.com/i/teamlogos/soccer/500/default-team-logo-500.png'
         "
-        width="100px"
+        width="120px"
         height="100px"
         class="image2"
       />
@@ -34,12 +35,15 @@ export default {
 };
 </script>
 <style>
+.Test2 {
+  padding-left: 40%;
+}
 .Test {
   width: 500px;
   height: 150px;
   border: 3px ridge #6b6b6b;
   border-radius: 10px;
-  background: linear-gradient( to right,#5D5C61,#7e9a9a);
+  background: linear-gradient(to right, #5d5c61, #7e9a9a);
 }
 .team-name {
   position: relative;
