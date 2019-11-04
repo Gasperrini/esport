@@ -1,14 +1,14 @@
 <template>
   <div>
     <div v-for="item in message.data" v-bind:key="item.id">
-      <list-test :message="item" />
+      <PlayerList :message="item" />
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import ListTest from "@/components/listTest.vue";
+import PlayerList from "@/components/PlayerList.vue";
 import axios from "../../node_modules/axios";
 import APIKEY from "!raw-loader!@/assets/apikey.txt";
 
@@ -28,7 +28,7 @@ export default {
       });
   },
   components: {
-    ListTest
+    PlayerList
   }
 };
 </script>

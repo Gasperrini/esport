@@ -1,6 +1,6 @@
 <template>
   <div class="Test2">
-    <div class="Test">
+    <div class="Test" v-on:click="Detailed">
       <img
         v-show="message.image_url"
         :src="
@@ -27,10 +27,26 @@
 </template>
 
 <script>
+import router from "../router";
+
 export default {
   name: "listTest",
   props: {
-    message: Object
+    message: Object,
+    Guest: Boolean
+  },
+  methods: {
+    Detailed: function() {
+      router.push("/playerdetailed");
+      console.log("test clicked");
+    }
+  },
+  mounted: function() {
+    if (this.vm.$children[0].Role == "Guest") {
+      this.Guest = true;
+    } else {
+      this.Guest = false;
+    }
   }
 };
 </script>
@@ -64,12 +80,12 @@ export default {
 .image1 {
   position: relative;
   left: -17%;
-  top: 30px;
+  top: 10px;
   z-index: 1;
 }
 .image2 {
   position: relative;
   left: -30%;
-  top: 30px;
+  top: 15px;
 }
 </style>

@@ -20,6 +20,9 @@
       <md-button class="md-raised md-primary" v-on:click="Login"
         >Login</md-button
       >
+      <md-button class="md-raised md-secondary" v-on:click="Register"
+        >Register</md-button
+      >
     </div>
   </div>
 </template>
@@ -66,6 +69,36 @@ export default {
         this.hasMessages = true;
       }
       if (this.username && this.password) {
+        console.log(this.username);
+        if (this.username == "a" && this.password == "a") {
+          this.vm.$children[0].Role = "Admin";
+          console.log(this.vm.$children[0].Role);
+        } else if (this.username == "b" && this.password == "b") {
+          this.vm.$children[0].Role = "Signed in";
+          console.log(this.vm.$children[0].Role);
+        } else {
+          this.vm.$children[0].Role = "Guest";
+          console.log(this.vm.$children[0].Role);
+        }
+        console.log(this.password);
+        this.username = "";
+        this.password = "";
+        this.errors = [];
+        this.hasMessages = false;
+      }
+    },
+    Register: function() {
+      this.errors = [];
+      if (!this.username) {
+        this.errors.push("Username required.");
+        this.hasMessages = true;
+      }
+      if (!this.password) {
+        this.errors.push("Password required.");
+        this.hasMessages = true;
+      }
+      if (this.username && this.password) {
+        console.log("Register");
         console.log(this.username);
         console.log(this.password);
         this.errors = [];
