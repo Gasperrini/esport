@@ -1,6 +1,6 @@
 <template>
   <div>
-    Detailed Player info
+    Detailed info
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="Test2">
-    <div class="Test" v-on:click="Detailed" v-show="Guest">
+    <div class="Test" v-on:click="Detailed" v-if="Guest">
       <img
         v-show="message.image_url"
         :src="

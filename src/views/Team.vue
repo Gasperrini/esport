@@ -1,6 +1,7 @@
 <template>
   <div>
     Teams WIP
+    <TeamList />
   </div>
 </template>
 
@@ -8,6 +9,7 @@
 // @ is an alias to /src
 import axios from "../../node_modules/axios";
 import APIKEY from "!raw-loader!@/assets/apikey.txt";
+import TeamList from "@/components/Team.vue";
 
 export default {
   name: "home",
@@ -23,6 +25,9 @@ export default {
         this.message = response;
         console.log(this.message);
       });
+  },
+  components: {
+    TeamList
   }
 };
 </script>
