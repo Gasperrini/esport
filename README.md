@@ -6,6 +6,7 @@ Download git https://git-scm.com/download/win
 ```
 git remote add origin https://github.com/MomoChimes/esport.git
 ```
+create file /assets/apikey.txt with pandascore api key inside.
 
 ## Project setup
 ```
