@@ -1,6 +1,6 @@
 <template>
   <div class="Test2">
-    <div class="Test" v-on:click="Detailed">
+    <div class="Test" v-on:click="Detailed" v-show="Guest">
       <img
         v-show="message.image_url"
         :src="
@@ -33,7 +33,8 @@ export default {
   name: "listTest",
   props: {
     message: Object,
-    Guest: Boolean
+    Guest: Boolean,
+    role: String
   },
   methods: {
     Detailed: function() {
@@ -42,7 +43,8 @@ export default {
     }
   },
   mounted: function() {
-    if (this.vm.$children[0].Role == "Guest") {
+    // eslint-disable-next-line
+    if (this.role == "Guest") {
       this.Guest = true;
     } else {
       this.Guest = false;

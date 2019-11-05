@@ -71,14 +71,20 @@ export default {
       if (this.username && this.password) {
         console.log(this.username);
         if (this.username == "a" && this.password == "a") {
-          this.vm.$children[0].Role = "Admin";
-          console.log(this.vm.$children[0].Role);
+          // eslint-disable-next-line
+          vm.$children[0].Role = "Admin";
+          // eslint-disable-next-line
+          console.log(vm.$children[0].Role);
         } else if (this.username == "b" && this.password == "b") {
-          this.vm.$children[0].Role = "Signed in";
-          console.log(this.vm.$children[0].Role);
+          // eslint-disable-next-line
+          vm.$children[0].Role = "Signed in";
+          // eslint-disable-next-line
+          console.log(vm.$children[0].Role);
         } else {
-          this.vm.$children[0].Role = "Guest";
-          console.log(this.vm.$children[0].Role);
+          // eslint-disable-next-line
+          vm.$children[0].Role = "Guest";
+          // eslint-disable-next-line
+          console.log(vm.$children[0].Role);
         }
         console.log(this.password);
         this.username = "";

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="item in message.data" v-bind:key="item.id">
-      <PlayerList :message="item" />
+      <PlayerList :message="item" :role="Role" />
     </div>
   </div>
 </template>
@@ -16,16 +16,19 @@ export default {
   name: "home",
   data: function() {
     return {
-      message: ""
+      message: "",
+      Role: ""
     };
   },
   mounted() {
-    axios
-      .get("https://api.pandascore.co/players?&token=" + APIKEY)
-      .then(response => {
-        this.message = response;
-        console.log(this.message);
-      });
+    // eslint-disable-next-line
+    (this.Role = vm.$children[0].Role),
+      axios
+        .get("https://api.pandascore.co/players?&token=" + APIKEY)
+        .then(response => {
+          this.message = response;
+          console.log(this.message);
+        });
   },
   components: {
     PlayerList
