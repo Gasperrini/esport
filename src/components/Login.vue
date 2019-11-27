@@ -72,7 +72,7 @@ export default {
       if (this.username && this.password) {
         var self = this;
         var url =
-          "http://localhost:8000/api/test.php?action=login&username=" +
+          "http://localhost:8000/api/auth.php?action=login&username=" +
           this.username +
           "&password=" +
           this.password;
