@@ -32,6 +32,7 @@ import Vue from "vue";
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
+import axios from "../../node_modules/axios";
 
 Vue.use(VueMaterial);
 
@@ -69,24 +70,21 @@ export default {
         this.hasMessages = true;
       }
       if (this.username && this.password) {
-        console.log(this.username);
-        if (this.username == "a" && this.password == "a") {
-          // eslint-disable-next-line
-          vm.$children[0].Role = "Admin";
-          // eslint-disable-next-line
-          console.log(vm.$children[0].Role);
-        } else if (this.username == "b" && this.password == "b") {
-          // eslint-disable-next-line
-          vm.$children[0].Role = "Signed in";
-          // eslint-disable-next-line
-          console.log(vm.$children[0].Role);
-        } else {
-          // eslint-disable-next-line
-          vm.$children[0].Role = "Guest";
-          // eslint-disable-next-line
-          console.log(vm.$children[0].Role);
-        }
-        console.log(this.password);
+        var self = this;
+        var url =
+          "http://localhost:8000/api/test.php?action=login&username=" +
+          this.username +
+          "&password=" +
+          this.password;
+        axios.get(url).then(function(response) {
+          if (response.data != null) {
+            // eslint-disable-next-line
+              vm.$children[0].Role = response.data.Name;
+          } else {
+            self.errors.push("Incorrect Username or Password");
+            self.hasMessages = true;
+          }
+        });
         this.username = "";
         this.password = "";
         this.errors = [];
