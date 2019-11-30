@@ -1,10 +1,9 @@
 <template>
   <div class="Test2">
-    <div class="Test" v-on:click="Detailed" v-if="Guest">
+    <div class="Test" v-on:click="Detailed">
       <img
-        v-show="message.image_url"
         :src="
-          message.image_url ||
+          message.zaidejopic ||
             'http://www.thesportsfannetwork.com/siteresources/images/defaultavatar.jpg'
         "
         class="image1"
@@ -13,15 +12,15 @@
       />
       <img
         :src="
-          message.current_team.image_url ||
+          message.komandospic ||
             'https://a.espncdn.com/i/teamlogos/soccer/500/default-team-logo-500.png'
         "
         width="120px"
         height="100px"
         class="image2"
       />
-      <div class="team-name">{{ message.current_team.name }}</div>
-      <div class="game-name">{{ message.name }}</div>
+      <div class="team-name">{{ message.vardas }}</div>
+      <div class="game-name">{{ message.role }}</div>
     </div>
   </div>
 </template>
@@ -38,8 +37,8 @@ export default {
   },
   methods: {
     Detailed: function() {
-      router.push("/playerdetailed");
-      console.log("test clicked");
+      var ID = this.message.id_Zaidejai;
+      router.push({ name: "playerdetailed", params: { ID } });
     }
   },
   mounted: function() {
