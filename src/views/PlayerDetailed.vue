@@ -2,47 +2,59 @@
   <div>
     <div v-show="Role == 'Admin'">
       <p v-if="errors.length">
-        <b>Please correct the following error(s):</b>
+        <b>Prašome ištaisyti klaidą(s):</b>
       </p>
       <ul>
         <li v-for="error in errors" :key="error">{{ error }}</li>
       </ul>
       <div class="test">
         <md-field>
-          <label>First Name</label>
+          <label>Vardas</label>
           <md-input v-model="info.vardas" required></md-input>
         </md-field>
         <md-field>
-          <label>Last Name</label>
+          <label>Pavardė</label>
           <md-input v-model="info.pavarde" required></md-input>
         </md-field>
         <md-field>
-          <label>Nickname</label>
+          <label>Slapyvardis</label>
           <md-input v-model="info.slapyvardis" required></md-input>
         </md-field>
         <md-field>
-          <label>Country</label>
+          <label>Šalis</label>
           <md-input v-model="info.miestas"></md-input>
         </md-field>
         <md-field>
-          <label>Role</label>
+          <label>Rolė</label>
           <md-input v-model="info.role"></md-input>
         </md-field>
         <md-field>
-          <label>Picture</label>
+          <label>Paveiksliukas</label>
           <md-input v-model="info.zaidejopic"></md-input>
         </md-field>
         <md-field>
-          <label>Team ID</label>
-          <md-input v-model="info.fk_teamid"></md-input>
+          <label>Laimėjimai</label>
+          <md-input v-model="info.Laimejimai"></md-input>
+        </md-field>
+        <md-field>
+          <label>Pralaimėjimai</label>
+          <md-input v-model="info.Pralaimejimai"></md-input>
+        </md-field>
+        <md-field>
+          <label>Nužudymai</label>
+          <md-input v-model="info.Nuzudymai"></md-input>
+        </md-field>
+        <md-field>
+          <label>Mirtys</label>
+          <md-input v-model="info.Mirtys"></md-input>
         </md-field>
       </div>
       <div>
         <md-button class="md-raised md-primary" v-on:click="Edit"
-          >Edit</md-button
+          >Redaguoti</md-button
         >
         <md-button class="md-raised md-accent" v-on:click="Delete"
-          >Delete</md-button
+          >Ištrinti</md-button
         >
       </div>
     </div>
@@ -61,6 +73,7 @@
     <p class="words">
       Vardas: {{ info.vardas }} {{ info.pavarde }}
       <apexchart
+        v-if="Role == 'Admin' || Role == 'User'"
         class="diagram"
         type="radialBar"
         height="350"
@@ -75,6 +88,24 @@
       <p class="words">Komanda: {{ komanda.acronym }}</p>
       <p class="words">Žaidimas: {{ komanda.current_videogame.name }}</p>
     </div>
+    <p class="words" v-if="Role == 'Guest'">
+      Mirčių ir nužudymų santykis: {{ KA }}
+    </p>
+    <p class="words" v-if="Role == 'Guest'">
+      Laimėjimų statistika :{{ Winrate }}%
+    </p>
+    <p class="words" v-if="Role == 'User' || Role == 'Admin'">
+      Nužudymai {{ info.Nuzudymai }}
+    </p>
+    <p class="words" v-if="Role == 'User' || Role == 'Admin'">
+      Mirtys {{ info.Mirtys }}
+    </p>
+    <p class="words" v-if="Role == 'User' || Role == 'Admin'">
+      Laimėjimai {{ info.Laimejimai }}
+    </p>
+    <p class="words" v-if="Role == 'User' || Role == 'Admin'">
+      Pralaimėjimai {{ info.Pralaimejimai }}
+    </p>
   </div>
 </template>
 
@@ -126,15 +157,15 @@ export default {
     Edit: function() {
       this.errors = [];
       if (!this.info.vardas) {
-        this.errors.push("First name required.");
+        this.errors.push("Vardas yra privalomas");
         this.hasMessages = true;
       }
       if (!this.info.pavarde) {
-        this.errors.push("Last name required.");
+        this.errors.push("Pavardė yra privaloma");
         this.hasMessages = true;
       }
       if (!this.info.slapyvardis) {
-        this.errors.push("Nickname required.");
+        this.errors.push("Slapyvardis yra privalomas");
         this.hasMessages = true;
       }
       if (this.info.vardas && this.info.pavarde && this.info.slapyvardis) {
@@ -154,7 +185,15 @@ export default {
           "&fk_teamid=" +
           this.info.fk_teamid +
           "&playerid=" +
-          this.$route.params.ID;
+          this.$route.params.ID +
+          "&wins=" +
+          this.info.Laimejimai +
+          "&loses=" +
+          this.info.Pralaimejimai +
+          "&kills=" +
+          this.info.Nuzudymai +
+          "&deaths=" +
+          this.info.Mirtys;
         axios.get(url).then(response => {
           console.log(response);
           alert(response.data);
@@ -164,6 +203,21 @@ export default {
         this.hasMessages = false;
       }
     }
+  },
+  beforeUpdate() {
+    if (this.info.Mirtys != 0) {
+      this.KA =
+        Number(this.info.Nuzudymai) /
+        (Number(this.info.Mirtys) + Number(this.info.Nuzudymai));
+    }
+    if (this.info.Pralaimejimai != 0) {
+      this.Winrate =
+        (Number(this.info.Laimejimai) /
+          (Number(this.info.Pralaimejimai) + Number(this.info.Laimejimai))) *
+        100;
+    }
+    this.series[0] = this.Ka;
+    this.series[1] = this.Winrate;
   },
   mounted() {
     // eslint-disable-next-line

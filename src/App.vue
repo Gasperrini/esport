@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    You are viewing as: {{ Role }}
+    Naršote kaip: {{ Role }}
     <div id="nav">
-      <router-link to="/">Login</router-link> |
-      <router-link to="/player">Players</router-link> |
-      <router-link to="/team">Teams</router-link> |
-      <router-link to="/tournament">Tournaments</router-link> |
-      <router-link to="/game">Games</router-link>
+      <router-link to="/">Prisijungimas</router-link> |
+      <router-link to="/player">Žaidėjai</router-link> |
+      <router-link to="/team">Komandos</router-link> |
+      <router-link to="/tournament">Turnyrai</router-link> |
+      <router-link to="/game">Žaidimai</router-link>
     </div>
     <router-view />
   </div>

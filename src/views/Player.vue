@@ -2,44 +2,44 @@
   <div>
     <div v-if="Role == 'Admin'">
       <p v-if="errors.length">
-        <b>Please correct the following error(s):</b>
+        <b>Prašome ištaisyti klaidą(s):</b>
       </p>
       <ul>
         <li v-for="error in errors" :key="error">{{ error }}</li>
       </ul>
       <div class="test">
         <md-field>
-          <label>First Name</label>
+          <label>Vardas</label>
           <md-input v-model="name" required></md-input>
         </md-field>
         <md-field>
-          <label>Last Name</label>
+          <label>Pavardė</label>
           <md-input v-model="lastname" required></md-input>
         </md-field>
         <md-field>
-          <label>Nickname</label>
+          <label>Slapyvardis</label>
           <md-input v-model="username" required></md-input>
         </md-field>
         <md-field>
-          <label>Country</label>
+          <label>Šalis</label>
           <md-input v-model="country"></md-input>
         </md-field>
         <md-field>
-          <label>Role</label>
+          <label>Rolė</label>
           <md-input v-model="role"></md-input>
         </md-field>
         <md-field>
-          <label>Picture</label>
+          <label>Paveiksliukas</label>
           <md-input v-model="picture"></md-input>
         </md-field>
         <md-field>
-          <label>Team ID</label>
+          <label>Komandos ID</label>
           <md-input v-model="teamid"></md-input>
         </md-field>
       </div>
       <div>
         <md-button class="md-raised md-primary" v-on:click="Register"
-          >Register</md-button
+          >Registruoti</md-button
         >
       </div>
     </div>
@@ -77,15 +77,15 @@ export default {
     Register: function() {
       this.errors = [];
       if (!this.name) {
-        this.errors.push("First name required.");
+        this.errors.push("Vardas yra privalomas");
         this.hasMessages = true;
       }
       if (!this.lastname) {
-        this.errors.push("Last name required.");
+        this.errors.push("Pavardė yra privaloma");
         this.hasMessages = true;
       }
       if (!this.username) {
-        this.errors.push("Nickname required.");
+        this.errors.push("Slapyvardis yra privalomas");
         this.hasMessages = true;
       }
       if (this.name && this.lastname && this.username) {
@@ -108,7 +108,6 @@ export default {
           console.log(response);
           alert(response.data);
         });
-        console.log("Register");
         this.errors = [];
         this.hasMessages = false;
       }

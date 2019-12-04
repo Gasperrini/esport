@@ -62,8 +62,12 @@ if ($action == 'update') {
     $pic = $_GET['pic'];
     $fk_teamid = $_GET['fk_teamid'];
     $playerid = $_GET['playerid'];
+    $wins = $_GET['wins'];
+    $loses = $_GET['loses'];
+    $kills = $_GET['kills'];
+    $deaths = $_GET['deaths'];
     $sql = $conn->query("UPDATE `zaidejai` SET vardas='$name' , pavarde='$lastname', slapyvardis='$username',miestas='$city', 
-     `role`='$role', zaidejopic='$pic',fk_teamid='$fk_teamid' WHERE id_Zaidejai='$playerid'");
+     `role`='$role', zaidejopic='$pic',fk_teamid='$fk_teamid',Laimejimai='$wins',Pralaimejimai='$loses',Nuzudymai='$kills', Mirtys='$deaths' WHERE id_Zaidejai='$playerid'");
     if($sql)
     {
         $result = "Successful";

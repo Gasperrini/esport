@@ -1,27 +1,27 @@
 <template>
   <div id="LoginForm" class="hello">
     <p v-if="errors.length">
-      <b>Please correct the following error(s):</b>
+      <b>Prašome ištaisyti klaidą(s):</b>
     </p>
     <ul>
       <li v-for="error in errors" :key="error">{{ error }}</li>
     </ul>
     <div class="test">
       <md-field :class="messageClass">
-        <label>Username</label>
+        <label>Prisijungimo vardas</label>
         <md-input v-model="username" required></md-input>
       </md-field>
       <md-field :class="messageClass">
-        <label>Password</label>
+        <label>Slaptažodis</label>
         <md-input v-model="password" type="password" required></md-input>
       </md-field>
     </div>
     <div>
       <md-button class="md-raised md-primary" v-on:click="Login"
-        >Login</md-button
+        >Prisijungti</md-button
       >
       <md-button class="md-raised md-secondary" v-on:click="Register"
-        >Register</md-button
+        >Registruotis</md-button
       >
     </div>
   </div>
