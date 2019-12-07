@@ -35,6 +35,11 @@ export default new Router({
       path: "/playerdetailed",
       name: "playerdetailed",
       component: () => import("./views/PlayerDetailed.vue")
+    },
+    {
+      path: "/gamedetailed",
+      name: "gamedetailed",
+      component: () => import("./views/GameDetailed.vue")
     }
   ]
 });
