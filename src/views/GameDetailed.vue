@@ -9,32 +9,24 @@
       </ul>
       <div class="test">
         <md-field>
-          <label>First Name</label>
-          <md-input v-model="info.vardas" required></md-input>
+          <label>Title</label>
+          <md-input v-model="info.pavadinimas" required></md-input>
         </md-field>
         <md-field>
-          <label>Last Name</label>
-          <md-input v-model="info.pavarde" required></md-input>
+          <label>Date</label>
+          <md-input v-model="info.pradzios_laikas" required></md-input>
         </md-field>
         <md-field>
-          <label>Nickname</label>
-          <md-input v-model="info.slapyvardis" required></md-input>
+          <label>Tournament ID</label>
+          <md-input v-model="info.fk_Turnyraiid_Turnyrai" required></md-input>
         </md-field>
         <md-field>
-          <label>Country</label>
-          <md-input v-model="info.miestas"></md-input>
+          <label>Team 1 ID</label>
+          <md-input v-model="info.fk_Komandosid_Komandos"></md-input>
         </md-field>
         <md-field>
-          <label>Role</label>
-          <md-input v-model="info.role"></md-input>
-        </md-field>
-        <md-field>
-          <label>Picture</label>
-          <md-input v-model="info.zaidejopic"></md-input>
-        </md-field>
-        <md-field>
-          <label>Team ID</label>
-          <md-input v-model="info.fk_teamid"></md-input>
+          <label>Team 2 ID</label>
+          <md-input v-model="info.fk_Komandosid_Komandos1"></md-input>
         </md-field>
       </div>
       <div>
@@ -46,20 +38,8 @@
         >
       </div>
     </div>
-    <div v-if="komanda == 'null'">
-      <img :src="info.zaidejopic" class="image1" width="300px" height="280px" />
-    </div>
-    <div v-if="komanda != 'null'">
-      <img :src="info.zaidejopic" class="image1" width="300px" height="280px" />
-      <img
-        :src="komanda.image_url"
-        class="image2"
-        width="300px"
-        height="280px"
-      />
-    </div>
     <p class="words">
-      Vardas: {{ info.vardas }} {{ info.pavarde }}
+      Pavadinimas: {{ info.pavadinimas }}
       <apexchart
         class="diagram"
         type="radialBar"
@@ -68,13 +48,8 @@
         :series="series"
       />
     </p>
-    <p class="words">Slapyvardis: {{ info.slapyvardis }}</p>
-    <p class="words" v-if="info.role">Role: {{ info.role }}</p>
-    <p class="words" v-if="info.miestas">Šalis: {{ info.miestas }}</p>
-    <div v-if="komanda != 'null'">
-      <p class="words">Komanda: {{ komanda.acronym }}</p>
-      <p class="words">Žaidimas: {{ komanda.current_videogame.name }}</p>
-    </div>
+    <p class="words">Rezultatas: {{ info.pirmo_oponento_rezultatas }}-{{ info.antro_oponento_rezultatas }}</p>
+      <p class="words">Laimėtojas: {{ info.laimetojas }}</p>
   </div>
 </template>
 
@@ -87,7 +62,7 @@ import VueApexCharts from "vue-apexcharts";
 import Vue from "vue";
 Vue.component("apexchart", VueApexCharts);
 export default {
-  name: "DetailedPlayer",
+  name: "DetailedGame",
   data: function() {
     return {
       info: "",
@@ -117,7 +92,7 @@ export default {
   methods: {
     Delete: function() {
       var url =
-        "http://localhost:8000/api/auth.php?action=delete&id=" +
+        "http://localhost:8000/api/gameauth.php?action=delete&id=" +
         this.$route.params.ID;
       axios.get(url).then(response => {
         alert(response.data);
@@ -125,35 +100,35 @@ export default {
     },
     Edit: function() {
       this.errors = [];
-      if (!this.info.vardas) {
-        this.errors.push("First name required.");
+      if (!this.info.title) {
+        this.errors.push("Title required.");
         this.hasMessages = true;
       }
-      if (!this.info.pavarde) {
-        this.errors.push("Last name required.");
+      if (!this.info.tournamentid) {
+        this.errors.push("Tournament ID required.");
         this.hasMessages = true;
       }
-      if (!this.info.slapyvardis) {
-        this.errors.push("Nickname required.");
+      if (!this.info.team1id) {
+        this.errors.push("Team 1 ID required.");
         this.hasMessages = true;
       }
-      if (this.info.vardas && this.info.pavarde && this.info.slapyvardis) {
+      if (!this.info.team2id) {
+        this.errors.push("Team 2 ID required.");
+        this.hasMessages = true;
+      }
+      if (this.info.title && this.info.tournamentid && this.info.team1id && this.info.team2id) {
         var url =
-          "http://localhost:8000/api/auth.php?action=update&name=" +
-          this.info.vardas +
-          "&lastname=" +
-          this.info.pavarde +
-          "&username=" +
-          this.info.slapyvardis +
-          "&city=" +
-          this.info.miestas +
-          "&role=" +
-          this.info.role +
-          "&pic=" +
-          this.info.zaidejopic +
-          "&fk_teamid=" +
-          this.info.fk_teamid +
-          "&playerid=" +
+          "http://localhost:8000/api/gameauth.php?action=update&title=" +
+          this.info.title +
+          "&date=" +
+          this.info.date +
+          "&tournamentid=" +
+          this.info.tournamentid +
+          "&team1id=" +
+          this.info.team1id +
+          "&team2id=" +
+          this.info.team2id;
+          "&matchid=" +
           this.$route.params.ID;
         axios.get(url).then(response => {
           console.log(response);
@@ -169,7 +144,7 @@ export default {
     // eslint-disable-next-line
     this.Role = vm.$children[0].Role;
     var url =
-      "http://localhost:8000/api/players.php?action=getPlayer&id=" +
+      "http://localhost:8000/api/games.php?action=getGame&id=" +
       this.$route.params.ID;
     axios.get(url).then(response => {
       this.info = response.data;

@@ -9,32 +9,24 @@
       </ul>
       <div class="test">
         <md-field>
-          <label>Pavadinimas</label>
-          <md-input v-model="name" required></md-input>
+          <label>Title</label>
+          <md-input v-model="title" required></md-input>
         </md-field>
         <md-field>
-          <label>Last Name</label>
-          <md-input v-model="lastname" required></md-input>
+          <label>Date</label>
+          <md-input v-model="date"></md-input>
         </md-field>
         <md-field>
-          <label>Nickname</label>
-          <md-input v-model="username" required></md-input>
+          <label>Tournament ID</label>
+          <md-input v-model="tournamentid" required></md-input>
         </md-field>
         <md-field>
-          <label>Country</label>
-          <md-input v-model="country"></md-input>
+          <label>Team 1 ID</label>
+          <md-input v-model="team1id" required></md-input>
         </md-field>
         <md-field>
-          <label>Role</label>
-          <md-input v-model="role"></md-input>
-        </md-field>
-        <md-field>
-          <label>Picture</label>
-          <md-input v-model="picture"></md-input>
-        </md-field>
-        <md-field>
-          <label>Team ID</label>
-          <md-input v-model="teamid"></md-input>
+          <label>Team 2 ID</label>
+          <md-input v-model="team2id" required></md-input>
         </md-field>
       </div>
       <div>
@@ -62,48 +54,46 @@ export default {
   data: function() {
     return {
       message: "",
+      title: "",
       Role: "",
-      name: "",
-      lastname: "",
-      username: "",
-      role: "",
-      country: "",
-      picture: "",
-      teamid: "", 
+      date: "",
+      tournamentid: "",
+      team1id: "",
+      team2id: "",
       errors: []
     };
   },
   methods: {
     Register: function() {
       this.errors = [];
-      if (!this.name) {
-        this.errors.push("First name required.");
+      if (!this.title) {
+        this.errors.push("Title required.");
         this.hasMessages = true;
       }
-      if (!this.lastname) {
-        this.errors.push("Last name required.");
+      if (!this.tournamentid) {
+        this.errors.push("Tournament ID required.");
         this.hasMessages = true;
       }
-      if (!this.username) {
-        this.errors.push("Nickname required.");
+      if (!this.team1id) {
+        this.errors.push("Team 1 ID required.");
         this.hasMessages = true;
       }
-      if (this.name && this.lastname && this.username) {
+      if (!this.team2id) {
+        this.errors.push("Team 2 ID required.");
+        this.hasMessages = true;
+      }
+      if (this.title && this.tournamentid && this.team1id && this.team2id) {
         var url =
-          "http://localhost:8000/api/auth.php?action=insert&name=" +
-          this.name +
-          "&lastname=" +
-          this.lastname +
-          "&username=" +
-          this.username +
-          "&city=" +
-          this.country +
-          "&role=" +
-          this.role +
-          "&pic=" +
-          this.picture +
-          "&fk_teamid=" +
-          this.teamid;
+          "http://localhost:8000/api/gameauth.php?action=insert&title=" +
+          this.title +
+          "&date=" +
+          this.date +
+          "&tournamentid=" +
+          this.tournamentid +
+          "&team1id=" +
+          this.team1id +
+          "&team2id=" +
+          this.team2id;
         axios.get(url).then(response => {
           console.log(response);
           alert(response.data);
