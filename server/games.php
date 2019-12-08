@@ -14,8 +14,8 @@ $action = '';
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
 }
-if ($action == 'getPlayers') {
-    $sql = $conn->query("select * from `zaidejai`");
+if ($action == 'getGames') {
+    $sql = $conn->query("select * from `rungtynes`");
     $messages = array();
     while ($row = $sql->fetch_assoc()) {
         array_push($messages, $row);
@@ -23,9 +23,9 @@ if ($action == 'getPlayers') {
     $result['rezultatai'] = $messages;
     echo json_encode($result);
 }
-if ($action == 'getPlayer') {
-    $playerid = $_GET['id']; 
-    $sql = $conn->query("select * from `zaidejai` where id_Zaidejai='$playerid'");
+if ($action == 'getGame') {
+    $matchid = $_GET['id']; 
+    $sql = $conn->query("select * from `rungtynes` where id_Rungtynes='$matchid'");
     $messages =$sql->fetch_assoc();
     $result = $messages;
     echo json_encode($result);
@@ -39,15 +39,15 @@ if ($action == 'insert') {
     $zaidejopic = $_GET['zaidejopic'];  
     $fk_teamid = $_GET['fk_teamid'];
 
-    $sql = $conn->query("UPDATE `zaidejai` SET fk_teamid= '$teamid' WHERE id_Zaidejai='$playerid'");
+    $sql = $conn->query("UPDATE `zaidejai` SET fk_teamid= '$teamid' WHERE id_Zaidejai='$matchid'");
    // $result = $sql->fetch_assoc();
 }
 if ($action == 'insert2') {
        $teamid = $_GET['teamid'];
-       $playerid = $_GET['playerid'];       
+       $matchid = $_GET['matchid'];       
        echo $teamid;
-       echo $playerid;
-       $sql = $conn->query("UPDATE `zaidejai` SET fk_teamid= '$teamid' WHERE id_Zaidejai='$playerid'");
+       echo $matchid;
+       $sql = $conn->query("UPDATE `zaidejai` SET fk_teamid= '$teamid' WHERE id_Zaidejai='$matchid'");
       // $result = $sql->fetch_assoc();
 }
 $conn->close();

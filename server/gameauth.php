@@ -24,7 +24,7 @@ if ($action == 'login') {
 }
 if ($action == 'delete') {
     $id = $_GET['id'];
-    $sql = $conn->query("delete from `zaidejai` where id_Zaidejai='$id'");
+    $sql = $conn->query("delete from `rungtynes` where id_Rungtynes='$id'");
     if($sql)
     {
         $result = "Successful";
@@ -35,15 +35,13 @@ if ($action == 'delete') {
     }
 }
 if ($action == 'insert') {
-    $name = $_GET['name'];
-    $lastname = $_GET['lastname'];
-    $username = $_GET['username'];
-    $city = $_GET['city'];
-    $role = $_GET['role'];
-    $pic = $_GET['pic'];
-    $fk_teamid = $_GET['fk_teamid'];
-    $sql = $conn->query("INSERT INTO `zaidejai`(`vardas`, `pavarde`, `slapyvardis`, `miestas`, `role`, `zaidejopic`,`fk_teamid`) VALUES 
-    ('$name', '$lastname','$username','$city','$role','$pic','$fk_teamid')");
+    $title = $_GET['title'];
+    $date = $_GET['date'];
+    $tournamentid = $_GET['tournamentid'];
+    $team1id = $_GET['team1id'];
+    $team2id = $_GET['team2id'];
+    $sql = $conn->query("INSERT INTO `rungtynes`(`pavadinimas`, `pradzios_laikas`, `fk_Turnyraiid_Turnyrai`, `fk_Komandosid_Komandos`, `fk_Komandosid_Komandos1`) VALUES 
+    ('$title', '$date','$tournamentid','$team1id','$team2id')");
     if($sql)
     {
         $result = "Successful";
@@ -54,16 +52,14 @@ if ($action == 'insert') {
     }
 }
 if ($action == 'update') {
-    $name = $_GET['name'];
-    $lastname = $_GET['lastname'];
-    $username = $_GET['username'];
-    $city = $_GET['city'];
-    $role = $_GET['role'];
-    $pic = $_GET['pic'];
-    $fk_teamid = $_GET['fk_teamid'];
-    $playerid = $_GET['playerid'];
-    $sql = $conn->query("UPDATE `zaidejai` SET vardas='$name' , pavarde='$lastname', slapyvardis='$username',miestas='$city', 
-     `role`='$role', zaidejopic='$pic',fk_teamid='$fk_teamid' WHERE id_Zaidejai='$playerid'");
+    $title = $_GET['title'];
+    $date = $_GET['date'];
+    $tournamentid = $_GET['tournamentid'];
+    $team1id = $_GET['team1id'];
+    $team2id = $_GET['team2id'];
+    $matchid = $_GET['matchid'];
+    $sql = $conn->query("UPDATE `rungtynes` SET pavadinimas='$title' , pradzios_laikas='$date', fk_Turnyraiid_Turnyrai='$tournamentid', 
+     fk_Komandosid_Komandos='$team1id', fk_Komandosid_Komandos1='$team2id' WHERE id_Rungtynes='$matchid'");
     if($sql)
     {
         $result = "Successful";
