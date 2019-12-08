@@ -14,7 +14,7 @@
         </md-field>
         <md-field>
           <label>Date</label>
-          <md-input v-model="date"></md-input>
+          <md-input v-model="date" required></md-input>
         </md-field>
         <md-field>
           <label>Tournament ID</label>
@@ -70,6 +70,10 @@ export default {
         this.errors.push("Title required.");
         this.hasMessages = true;
       }
+      if (!this.date) {
+        this.errors.push("Date required.");
+        this.hasMessages = true;
+      }
       if (!this.tournamentid) {
         this.errors.push("Tournament ID required.");
         this.hasMessages = true;
@@ -82,7 +86,7 @@ export default {
         this.errors.push("Team 2 ID required.");
         this.hasMessages = true;
       }
-      if (this.title && this.tournamentid && this.team1id && this.team2id) {
+      if (this.title && this.date && this.tournamentid && this.team1id && this.team2id) {
         var url =
           "http://localhost:8000/api/gameauth.php?action=insert&title=" +
           this.title +

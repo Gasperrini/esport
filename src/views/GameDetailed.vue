@@ -36,20 +36,22 @@
         <md-button class="md-raised md-accent" v-on:click="Delete"
           >Delete</md-button
         >
+        
       </div>
     </div>
-    <p class="words">
-      Pavadinimas: {{ info.pavadinimas }}
-      <apexchart
-        class="diagram"
-        type="radialBar"
-        height="350"
-        :options="options"
-        :series="series"
-      />
+    <p class="words" style="font-size:15px"> {{ info.pradzios_laikas }}</p>
+    <p class="words" style="font-size:40px">
+      {{ info.pavadinimas }}<br>
+      <br>
     </p>
-    <p class="words">Rezultatas: {{ info.pirmo_oponento_rezultatas }}-{{ info.antro_oponento_rezultatas }}</p>
       <p class="words">Laimėtojas: {{ info.laimetojas }}</p>
+      <p class="words">Rezultatas: {{ info.pirmo_oponento_rezultatas }}-{{ info.antro_oponento_rezultatas }}</p>
+      <p class="words">Žaidimų skaičius: {{ info.zaidimu_skaicius }}</p>
+    `<div v-if="turnyras != 'null'">`
+      <p class="words">Turnyras: {{ turnyras.name }}</p>
+      <p class="words">Lyga: {{ turnyras.league.name }}</p>
+      <p class="words">Žaidimas: {{ turnyras.videogame.name }}</p>
+    </div>
   </div>
 </template>
 
@@ -67,7 +69,12 @@ export default {
     return {
       info: "",
       Role: "",
-      komanda: "",
+      turnyras: "",
+      title: "",
+      date: "",
+      tournamentid: "",
+      team1id: "",
+      team2id: "",
       errors: [],
       Winrate: "",
       KA: "",
@@ -100,34 +107,38 @@ export default {
     },
     Edit: function() {
       this.errors = [];
-      if (!this.info.title) {
+      if (!this.info.pavadinimas) {
         this.errors.push("Title required.");
         this.hasMessages = true;
       }
-      if (!this.info.tournamentid) {
+      if (!this.info.pradzios_laikas) {
+        this.errors.push("Date required.");
+        this.hasMessages = true;
+      }
+      if (!this.info.fk_Turnyraiid_Turnyrai) {
         this.errors.push("Tournament ID required.");
         this.hasMessages = true;
       }
-      if (!this.info.team1id) {
+      if (!this.info.fk_Komandosid_Komandos) {
         this.errors.push("Team 1 ID required.");
         this.hasMessages = true;
       }
-      if (!this.info.team2id) {
+      if (!this.info.fk_Komandosid_Komandos1) {
         this.errors.push("Team 2 ID required.");
         this.hasMessages = true;
       }
-      if (this.info.title && this.info.tournamentid && this.info.team1id && this.info.team2id) {
+      if (this.info.pavadinimas && this.info.pradzios_laikas && this.info.fk_Turnyraiid_Turnyrai && this.info.fk_Komandosid_Komandos && this.info.fk_Komandosid_Komandos1) {
         var url =
           "http://localhost:8000/api/gameauth.php?action=update&title=" +
-          this.info.title +
+          this.info.pavadinimas +
           "&date=" +
-          this.info.date +
+          this.info.pradzios_laikas +
           "&tournamentid=" +
-          this.info.tournamentid +
+          this.info.fk_Turnyraiid_Turnyrai +
           "&team1id=" +
-          this.info.team1id +
+          this.info.fk_Komandosid_Komandos +
           "&team2id=" +
-          this.info.team2id;
+          this.info.fk_Komandosid_Komandos1 +
           "&matchid=" +
           this.$route.params.ID;
         axios.get(url).then(response => {
@@ -179,16 +190,16 @@ export default {
       this.series[1] = this.Winrate;
       if (response.data.fk_teamid != 0) {
         var url =
-          "https://api.pandascore.co/teams/" +
-          response.data.fk_teamid +
+          "https://api.pandascore.co/tournaments/" +
+          response.data.fk_Turnyraiid_Turnyrai +
           "?&token=" +
           APIKEY;
         axios.get(url).then(response => {
           console.log(response);
-          this.komanda = response.data;
+          this.turnyras = response.data;
         });
       } else {
-        this.komanda = "null";
+        this.turnyras = "null";
       }
     });
   }
@@ -198,7 +209,6 @@ export default {
 .words {
   font-family: Arial;
   font-size: 30px;
-  padding-right: 20cm;
 }
 .image1 {
   position: relative;
